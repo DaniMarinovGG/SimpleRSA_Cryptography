@@ -1,4 +1,14 @@
-# SimpleRSA_Cryptology
+# SimpleRSA_Cryptography
 This is a very simple cryptography system that basically uses the fact that big semiprimes (natural numbers with exactly two prime factors) are computationally hard to factor out.
 
-Here
+Here is basically how it works:
+1. Pick two prime numbers *p* and *q* that are very big and close in size and a third number *n* = p×q (which is their product). For example, it is _NOT_ a good idea to pick p = 7 and q = 199933 and n = 7 * 199933 = 1399531 because 7 is a small factor and once the third party tries divisibility by 2,3,5,7 it will know the first factor and then trivially deduce the next by dividing n/7. We will assume that *n* is "publicly" visible information.
+2. Denote a function φ(n) (Euler's totient function) which returns the number of positive integers up to *n* that are coprime with *n* (that means that their greatest common factor is 1). Since *p*, *q* are primes it follows that φ(n)=(p-1)(q-1) (if you want proof [Link text](https://www.mathsisfun.com/numbers/euler-totient.html) ).
+3. Pick a natural number *e*. (People usually pick *e* = 65537 because it is big enough for security and in binary it is 10000000000000001 which significantly increases performance for the next steps of encryption and decryption by the user - basically an established balance between security and performance). But in theory you can choose any *e* as long as it is coprime to φ(n). We will assume that *e* is "publicly" visible information as *n*.
+4. Calculate a natural number *d* modulo ф(n) such that e*d ≡ 1 (mod ф(n)). The EEA (Extended Euclidean Algorithm) proves the uniqueness and existence of *d* (no matter the values of *e* and ф(n)) and its computational ease. The operation that calculates *d* is commonly refered to as "Modular multiplicative inverse". This is basically the set up.
+5. TO ENCRYPT: Let *m* be a natural number representing your message. (Convert the String type to bytes array for example). Calculate m^e mod n. The result is the encrypted message let that resulting number be *c*. (NOTE: m MUST BE SMALLER THAN n - otherwise it won't work because m>n (mod n) will give a number in the range [0, n) anyways)
+6. TO DECRYPT: Take the encrypted message *c* and similarly to step 5 calculate c^d mod n. This will give you *m* - the original message. (In a moment we will show why that is the case and why it is computationally challenging to reverse it)
+
+How to execute the process? Firstly, a friend wants to send you a secret message. He uses your *e* and *n* (which are public) to calculate the encrypted message *c*. Then he sends you *c* (an intruder may see the message but it is encrypted). Then when you receive *c* you do step 6 and get their original message. 
+
+NOT FINISHED YET. Will write the proof tomorrow (maybe...) cuz it is 1AM and sleep is needed after all... And will upload the Java source code tomorrow (again maybe... not entirely sure)
