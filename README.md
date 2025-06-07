@@ -11,4 +11,5 @@ Here is basically how it works:
 
 How to execute the process? Firstly, a friend wants to send you a secret message. He uses your *e* and *n* (which are public) to calculate the encrypted message *c*. Then he sends you *c* (an intruder may see the message but it is encrypted). Then when you receive *c* you do step 6 and get their original message. 
 
-NOT FINISHED YET. Will write the proof tomorrow (maybe...) cuz it is 1AM and sleep is needed after all... And will upload the Java source code tomorrow (again maybe... not entirely sure)
+
+Proof (of step 6 that `c^d ≡ m (mod n)`)
