@@ -31,7 +31,9 @@ This completes the proof of the basic property.
 Now let's get to the actual proof.
 Proof (of step 6 that `c^d ≡ m (mod n)` or in other words that the decryption actually works):
 There are two cases:
-Case 1:
+
+
+`Case 1`:
 This is the most commom (basically every) case where `m` is NOT divisible by `p` and `q`.
 
 The `gcd(m,n) = 1 and m<n` therefore we can use the Euler's Theorem (See proof [here](https://en.wikipedia.org/wiki/Euler%27s_theorem#Proofs)):
@@ -43,4 +45,24 @@ The `gcd(m,n) = 1 and m<n` therefore we can use the Euler's Theorem (See proof [
 But by definition in step 4: `e*d ≡ 1 (mod φ(n))` which implies `e*d-1=k*φ(n)` => `e*d = 1+k*φ(n)`. Substitute `e*d` to get:
 
 `m^(e*d) ≡ m * 1^k (mod n)` (`1^k` equals `1` for every `k` and `m^(e*d) = (m^e)^d`)
-`(m^e)^d ≡ m (mod n)` but `m^e mod n` is out encrypted message and when we use exponentiation `d` we get our original message `m mod n` which completes the proof.
+`(m^e)^d ≡ m (mod n)` but `m^e mod n` is out encrypted message and when we use exponentiation `d` we get our original message `m mod n` which completes `case 1`.
+
+
+Case 2:
+This scenario is very unlikely though it can happen that `m` is divisible by `p` or `q`:
+Without any loss of generality let m ≡ 0 (mod p) then using the basic property that we have proven - " If `a ≡ b (mod m)` then `a^k ≡ b^k (mod m)` " for `k = e*d` we get:
+`m^(e*d) ≡ 0^(e*d) (mod p)` (of course e*d ≠ 0 cuz 0^0 is undefined)
+`m^(e*d) ≡ 0 (mod p)` and we have `m ≡ 0 (mod p)` therefore both are divisible by `p` => `m^(e*d) ≡ m ≡ 0 (mod p)`
+Since `m < n = p*q` and `m ≡ 0 (mod p)` it follows that `m` is NOT divisible by `q` (the other prime). Now let's use the Euler's theorem (again):
+`m^φ(q) ≡ 1 (mod q)`
+`m^(q-1) ≡ 1 (mod q)` (see step 2 of algoritm)
+And again from `case 1` we know that `e*d = 1 + k * φ(n) = 1 + k * (p-1) * (q-1)`
+Similarly to `case 1`:
+`m^(e*d) = m^(1+k*φ(n)) = m^(1+k*(p-1)*(q-1)) = m*(m^(p-1)*(q-1))^k` but since `(p-1)*(q-1)` is a multiple of `q-1` it follows that:
+`m^(p-1)(q-1) ≡ 1 (mod q)`
+So like in `case 1` we get:
+`m^(e*d) ≡ m*1^k = m (mod q)`
+
+Now we know that `m^(e*d) ≡ m (mod p)` and `m^(e*d) ≡ m (mod q)`.
+Using the CRT (Chinese remainder theorem - see [Proof](https://crypto.stanford.edu/pbc/notes/numbertheory/crt.html)) we get:
+`m^(e*d) ≡ m (mod p*q = n)` which completes `case 2` and the whole proof.
