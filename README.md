@@ -10,6 +10,3 @@ Here is basically how it works:
 6. TO DECRYPT: Take the encrypted message `c` and similarly to step 5 calculate `c^d mod n`. This will give you `m` - the original message. (In a moment we will show why that is the case and why it is computationally challenging to reverse it)
 
 How to execute the process? Firstly, a friend wants to send you a secret message. He uses your *e* and *n* (which are public) to calculate the encrypted message `c`. Then he sends you `c` (an intruder may see the message but it is encrypted). Then when you receive `c` you do step 6 and get their original message. 
-
-
-*_Proof_* (of step 6 that `c^d ≡ m (mod n)` or in other words that the decryption actually works):
