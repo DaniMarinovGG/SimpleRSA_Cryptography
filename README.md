@@ -48,7 +48,7 @@ But by definition in step 4: `e*d ≡ 1 (mod φ(n))` which implies `e*d-1=k*φ(n
 `(m^e)^d ≡ m (mod n)` but `m^e mod n` is out encrypted message and when we use exponentiation `d` we get our original message `m mod n` which completes `case 1`.
 
 
-Case 2:
+`Case 2`:
 This scenario is very unlikely though it can happen that `m` is divisible by `p` or `q`:
 Without any loss of generality let m ≡ 0 (mod p) then using the basic property that we have proven - " If `a ≡ b (mod m)` then `a^k ≡ b^k (mod m)` " for `k = e*d` we get:
 `m^(e*d) ≡ 0^(e*d) (mod p)` (of course e*d ≠ 0 cuz 0^0 is undefined)
